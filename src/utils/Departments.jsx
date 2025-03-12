@@ -46,7 +46,7 @@ export const Departments = [
       name: 'Entrance',
       position: { lat: 9.147921, lng: 77.834648 },
       category: 'entrance',
-      description: 'Main entrance gate'
+      description: 'College Main entrance gate'
     },
     {
       name: 'Girls Hostel',
@@ -73,14 +73,10 @@ export const Departments = [
       description: 'Central library with study areas'
     },
     {
-
-      name: 'BOYS HOSTEL 2',
-
       name: 'Boys Hostel 2',
-
       position: { lat: 9.14876500396776, lng: 77.8271088098364 },
       category: 'hostel',
-      description: 'Boys Hostel 2'
+      description: 'Accomodation for male students'
     },
     {
       name: 'Civil Block',
@@ -92,6 +88,6 @@ export const Departments = [
       name: 'S&H Block',
       position: { lat: 9.148280077767497, lng: 77.83221497408572 },
       category: 'academic',
-      description: 'S&H Block'
+      description: 'Science and Humanities department'
     }
   ];

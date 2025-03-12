@@ -288,60 +288,60 @@ export const CustomGoogleMap = () => {
         });
         const infowindow = new window.google.maps.InfoWindow({
           disableAutoPan: false,
-          maxWidth: 220,
-          pixelOffset: new window.google.maps.Size(0, -25), // Significant upward adjustment
+          maxWidth: 240, // Increased from 220 to 240
+          pixelOffset: new window.google.maps.Size(0, -25),
           content: `
             <div style="padding: 0; margin: 0; background-color: #21013c; color: white; border-radius: 4px; overflow: hidden; border: 2px solid #3a0066;">
               <div style="padding: 5px; margin: 0;">
-                <h3 style="font-weight: bold; margin: 0; color: white; font-size: 13px; line-height: 1.1;">${dept.name}</h3>
-                <p style="margin: 2px 0 4px 0; color: #e0e0e0; font-size: 10px; line-height: 1.1;">${dept.description}</p>
-                <div style="display: grid; grid-template-columns: ${dept.category === 'academic' ? '1fr 1fr' : '1fr'}; gap: 4px; margin: 0;">
-                  <button 
-                    onclick="window.showRoute(${dept.position.lat}, ${dept.position.lng})"
-                    style="
-                      background: #1a73e8;
-                      color: white;
-                      border: none;
-                      padding: 4px 0;
-                      border-radius: 8px;
-                      cursor: pointer;
-                      font-weight: bold;
-                      font-size: 11px;
-                      width: 100%;
-                      line-height: 1;
-                      height: 24px;
-                      text-align: center;
-                      white-space: nowrap;
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                    "
-                  >
-                   Show Path
-                  </button>
-                  ${dept.category === 'academic' ? `
-                  <button 
-                    onclick="window.showDetails('${dept.name}')"
-                    style="
-                      background: #1a73e8;
-                      color: white;
-                      border: none;
-                      padding: 4px 0;
-                      border-radius: 8px;
-                      cursor: pointer;
-                      font-weight: bold;
-                      font-size: 11px;
-                      width: 100%;
-                      line-height: 1;
-                      height: 24px;
-                      text-align: center;
-                      white-space: nowrap;
-                      overflow: hidden;
-                      text-overflow: ellipsis;
-                    "
-                  >
-                    Details
-                  </button>` : ''}
-                </div>
+          <h3 style="font-weight: bold; margin: 0; color: white; font-size: 13px; line-height: 1.1;">${dept.name}</h3>
+          <p style="margin: 2px 0 4px 0; color: #e0e0e0; font-size: 10px; line-height: 1.1;">${dept.description}</p>
+          <div style="display: grid; grid-template-columns: ${dept.category === 'academic' ? '1fr 1fr' : '1fr'}; gap: 4px; margin: 0;">
+            <button 
+              onclick="window.showRoute(${dept.position.lat}, ${dept.position.lng})"
+              style="
+                background: #1a73e8;
+                color: white;
+                border: none;
+                padding: 4px 0;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 11px;
+                width: 100%;
+                line-height: 1;
+                height: 24px;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+            >
+             Show Path
+            </button>
+            ${dept.category === 'academic' ? `
+            <button 
+              onclick="window.showDetails('${dept.name}')"
+              style="
+                background: #1a73e8;
+                color: white;
+                border: none;
+                padding: 4px 0;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 11px;
+                width: 100%;
+                line-height: 1;
+                height: 24px;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+            >
+              Details
+            </button>` : ''}
+          </div>
               </div>
             </div>
           `
@@ -385,7 +385,7 @@ export const CustomGoogleMap = () => {
             opacity: 1 !important;
           
           }
- 
+       
           
           /* Remove any extra container padding */
           .gm-style-iw-a, .gm-style-iw-t {
