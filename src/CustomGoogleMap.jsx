@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {venues} from './utils/Venues.jsx'
 import {Departments} from './utils/Departments.jsx'
-
+import StyledVenueTable from './StyledVenueTable.jsx';
 export const CustomGoogleMap = () => {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
@@ -68,8 +68,8 @@ export const CustomGoogleMap = () => {
         fullscreenControl: false,
         streetViewControl: false,
         mapTypeControl: false, 
-        zoomControl: true,
-        rotateControl: true,
+        zoomControl: false,
+        rotateControl: false,
         heading: 0,
         tilt: 45,
         gestureHandling: 'greedy',
@@ -196,31 +196,31 @@ export const CustomGoogleMap = () => {
         switch (category) {
           case 'academic':
             return {
-              url: `school.png`,
+              url: `/school.png`,
               scaledSize: new window.google.maps.Size(40, 40),
               labelOrigin: new window.google.maps.Point(15, -10)
             };
           case 'hostel':
             return {
-              url: `hostel1.png`,
+              url: `/hostel1.png`,
               scaledSize: new window.google.maps.Size(45, 45),
               labelOrigin: new window.google.maps.Point(15, -10)
             };
           case 'facility':
             return {
-              url: `library.png`,
+              url: `/library.png`,
               scaledSize: new window.google.maps.Size(40, 40),
               labelOrigin: new window.google.maps.Point(15, -10)
             };
           case 'entrance':
             return {
-              url: `entry.png`,
+              url: `/entry.png`,
               scaledSize: new window.google.maps.Size(40, 40),
               labelOrigin: new window.google.maps.Point(15, -10)
             };
           default:
             return {
-              url: `restaurant.png`,
+              url: `/restaurant.png`,
               scaledSize: new window.google.maps.Size(40, 40),
               labelOrigin: new window.google.maps.Point(15, -10)
             };
@@ -239,8 +239,13 @@ export const CustomGoogleMap = () => {
           if (name.includes('Mechanical')) return 'MECH';
           if (name.includes('Civil')) return 'CIVIL';
         } else if (category === 'hostel') {
+
+          if (name.includes('BOYS HOSTEL 1')) return 'Boys Hostel 1';
+          if(name.includes('BOYS HOSTEL 2')) return 'Boys Hostel 2';
+
           if (name.includes('Boys Hostel 1')) return 'Boys Hostel 1';
           if(name.includes('Boys Hostel 2')) return 'Boys Hostel 2';
+
           if (name.includes('Girls')) return 'Girls Hostel';
         } else if (category === 'facility') {
           return 'Library';
@@ -277,49 +282,189 @@ export const CustomGoogleMap = () => {
             className: 'marker-label'
           }
         });
-
-        // Styled info window that matches the theme
         const infowindow = new window.google.maps.InfoWindow({
-          content: 
-            `<div style="padding: 16px; min-width: 200px; background-color: #21013c; color: white; border-radius: 8px;">
-              <h3 style="font-weight: bold; margin-bottom: 8px; color: white;">${dept.name}</h3>
-              <p style="margin-bottom: 12px; color: #e0e0e0;">${dept.description}</p>
-              <button 
-                onclick="window.showRoute(${dept.position.lat}, ${dept.position.lng})"
-                style="
-                  background: #1a73e8;
-                  color: white;
-                  border: none;
-                  padding: 8px 16px;
-                  border-radius: 20px;
-                  cursor: pointer;
-                  font-weight: 500;
-                  width: 100%;
-                  ${dept.category === 'academic' ? 'margin-bottom: 8px;' : ''}
-                "
-              >
-                Show Path
-              </button>
-              ${dept.category === 'academic' ? `
-              <button 
-                onclick="window.showDetails('${dept.name}')"
-                style="
-                  background: #1a73e8;
-                  color: white;
-                  border: none;
-                  padding: 8px 16px;
-                  border-radius: 20px;
-                  cursor: pointer;
-                  font-weight: 500;
-                  width: 100%;
-                "
-              >
-                Show Details
-              </button>` : ''}
-            </div>`
+          disableAutoPan: false,
+          maxWidth: 220,
+          pixelOffset: new window.google.maps.Size(0, -25), // Significant upward adjustment
+          content: `
+            <div style="padding: 0; margin: 0; background-color: #21013c; color: white; border-radius: 4px; overflow: hidden; border: 2px solid #3a0066;">
+              <div style="padding: 5px; margin: 0;">
+                <h3 style="font-weight: bold; margin: 0; color: white; font-size: 13px; line-height: 1.1;">${dept.name}</h3>
+                <p style="margin: 2px 0 4px 0; color: #e0e0e0; font-size: 10px; line-height: 1.1;">${dept.description}</p>
+                <div style="display: grid; grid-template-columns: ${dept.category === 'academic' ? '1fr 1fr' : '1fr'}; gap: 4px; margin: 0;">
+                  <button 
+                    onclick="window.showRoute(${dept.position.lat}, ${dept.position.lng})"
+                    style="
+                      background: #1a73e8;
+                      color: white;
+                      border: none;
+                      padding: 4px 0;
+                      border-radius: 8px;
+                      cursor: pointer;
+                      font-weight: bold;
+                      font-size: 11px;
+                      width: 100%;
+                      line-height: 1;
+                      height: 24px;
+                      text-align: center;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                   Show Path
+                  </button>
+                  ${dept.category === 'academic' ? `
+                  <button 
+                    onclick="window.showDetails('${dept.name}')"
+                    style="
+                      background: #1a73e8;
+                      color: white;
+                      border: none;
+                      padding: 4px 0;
+                      border-radius: 8px;
+                      cursor: pointer;
+                      font-weight: bold;
+                      font-size: 11px;
+                      width: 100%;
+                      line-height: 1;
+                      height: 24px;
+                      text-align: center;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    Details
+                  </button>` : ''}
+                </div>
+              </div>
+            </div>
+          `
         });
+        
+        // Add comprehensive styles for both desktop and mobile
+        const style = document.createElement('style');
+        style.textContent = `
+          /* Remove all extra spacing */
+          .gm-style .gm-style-iw-c {
+            padding: 0 !important;
+            border: 2px solid #3a0066 !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4) !important;
+            border-radius: 4px !important;
+            background-color: #21013c !important;
+            transform: translate(-50%, -50%) !important; /* Center vertically and horizontally */
+            top: 50% !important;
+            left: 50% !important;
+            margin: 0 !important;
+            position: absolute !important;
+          }
+          
+          /* Remove scrolling and padding from content area */
+          .gm-style .gm-style-iw-d {
+            overflow: visible !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            max-height: none !important;
+          }
+          
+          /* Hide arrow */
+          .gm-style .gm-style-iw-t::after,
+          .gm-style-iw-tc {
+            display: none !important;
+          }
+          
+          /* Style close button */
+          .gm-style .gm-ui-hover-effect {
+            top: 0 !important;
+            right: 0 !important;
+            opacity: 1 !important;
+          
+          }
+ 
+          
+          /* Remove any extra container padding */
+          .gm-style-iw-a, .gm-style-iw-t {
+            padding: 0 !important;
+            margin: 0 !important;
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+          }
+          
+          /* Button text should always be on a single line */
+          .gm-style .gm-style-iw-c button {
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            letter-spacing: -0.2px !important;
+          }
+          
+          /* Adjust for mobile */
+          @media (max-width: 768px) {
+            .gm-style .gm-style-iw-c {
+              max-width: 200px !important;
+            }
+            
+            .gm-style .gm-ui-hover-effect {
+              width: 20px !important;
+              height: 20px !important;
+            }
+            
+            /* Smaller font size for buttons on mobile */
+            .gm-style .gm-style-iw-c button {
+              font-size: 9px !important;
+              height: 22px !important;
+              padding: 0 !important;
+              letter-spacing: -0.3px !important;
+            }
+          }
+        `;
+        document.head.appendChild(style);
+        
+        // Apply additional adjustments when InfoWindow opens
+        google.maps.event.addListener(infowindow, 'domready', function() {
+          // Force white color on close button
+          document.querySelectorAll('.gm-ui-hover-effect img').forEach(img => {
+            img.style.filter = 'brightness(0) invert(1)';
+          });
+          
+          // Force center position
+          document.querySelectorAll('.gm-style-iw').forEach(el => {
+            el.style.position = 'absolute';
+            el.style.top = '50%';
+            el.style.left = '50%';
+            el.style.transform = 'translate(-50%, -50%)';
+          });
+          
+          // Remove any hidden overflow
+          document.querySelectorAll('.gm-style-iw-d').forEach(el => {
+            el.style.overflow = 'visible';
+            el.style.maxHeight = 'none';
+          });
+          document.querySelectorAll('.gm-ui-hover-effect img').forEach(img => {
+            img.style.filter = 'brightness(0) invert(1)';
+          });
+          
+          // Ensure buttons are properly sized and text stays on one line
+          document.querySelectorAll('button').forEach(btn => {
+            if (btn.innerText === 'Show Path' || btn.innerText === 'Details') {
+              btn.style.minHeight = '22px';
+              // Smaller font size for mobile
+              btn.style.fontSize = window.innerWidth < 768 ? '9px' : '12px';
+              btn.style.fontWeight = 'bold';
+              btn.style.whiteSpace = 'nowrap';
+              btn.style.overflow = 'hidden';
+              btn.style.textOverflow = 'ellipsis';
+              btn.style.letterSpacing = window.innerWidth < 768 ? '-0.3px' : 'normal';
+            }
+          });
+        });
+        
         infoWindowsRef.current.push(infowindow);
-
+        
+        // Update the marker click listener to center the InfoWindow
         marker.addListener('click', () => {
           // Close all other info windows first
           closeAllInfoWindows();
@@ -332,7 +477,6 @@ export const CustomGoogleMap = () => {
           infowindow.setPosition(map.getCenter());
           infowindow.open(map);
         });
-
         // Add click listener to close InfoWindow when clicking outside
         map.addListener('click', () => {
           closeAllInfoWindows();
@@ -697,102 +841,96 @@ export const CustomGoogleMap = () => {
         <p>Zoom and pan to explore. Click markers for walking paths.</p>
       </div>
       
-      {/* Venue details table with enhanced styling and floor grouping - improved for mobile and PC */}
-      {showDetails && selectedDepartment && selectedDepartment.category === 'academic' && (
-        <div className="mt-4 p-4 rounded-lg w-full max-w-4xl venue-table venue-info animate-fadeIn"
+   {/* Venue details table with enhanced styling and floor grouping - improved for mobile and PC */}
+{showDetails && selectedDepartment && selectedDepartment.category === 'academic' && (
+  <div className="mt-4 p-4 rounded-lg w-full max-w-4xl venue-table venue-info animate-fadeIn"
+    style={{
+      background: 'rgba(33, 1, 60, 0.9)',
+      color: 'white',
+      borderRadius: '15px',
+      backdropFilter: 'blur(8px)',
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
+      marginBottom: '1.5rem',
+      transition: 'all 0.3s ease-in-out',
+      animation: 'fadeIn 0.5s ease-out',
+      border: '2px solid rgba(156, 39, 176, 0.3)',
+      maxHeight: 'none',
+      height: 'auto'
+    }}>
+    <h3 className="text-2xl font-bold mb-4 text-center" 
+      style={{
+        background: 'linear-gradient(90deg, #9c27b0, #673ab7)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent',
+        textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+      }}>
+      {selectedDepartment.name} Events
+    </h3>
+    <div className="text-center mb-3 text-purple-200 text-sm">
+      <p>Below are all events happening in {selectedDepartment.name}</p>
+    </div>
+    
+    {/* Filter events for the selected department */}
+    {(() => {
+      // Get department name without "Block" for matching
+      const deptName = selectedDepartment.name.replace(/\s+Department$/, '');
+      
+      // Filter events for this department
+      const departmentEvents = venues.filter(event => 
+        event.department.includes(deptName)
+      );
+      
+      // Organize by floor
+      const eventsByFloor = {};
+      departmentEvents.forEach(event => {
+        if (!event.floor || event.floor === 'Unknown') {
+          if (!eventsByFloor['Other Locations']) {
+            eventsByFloor['Other Locations'] = [];
+          }
+          eventsByFloor['Other Locations'].push(event);
+        } else {
+          if (!eventsByFloor[event.floor]) {
+            eventsByFloor[event.floor] = [];
+          }
+          eventsByFloor[event.floor].push(event);
+        }
+      });
+      
+      // Return the JSX
+      return Object.keys(eventsByFloor).sort((a, b) => {
+        // Sort floors in logical order: Ground Floor, First Floor, Second Floor, etc.
+        const floorOrder = {
+          'Ground Floor': 1,
+          'First Floor': 2,
+          'Second Floor': 3,
+          'Third Floor': 4,
+          'Other Locations': 5
+        };
+        return floorOrder[a] - floorOrder[b];
+      }).map((floor, floorIndex) => (
+        <div key={floorIndex} className="mb-5 animate-slideIn" 
           style={{
-            background: 'rgba(33, 1, 60, 0.9)',
-            color: 'white',
-            borderRadius: '15px',
-            backdropFilter: 'blur(8px)',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
-            marginBottom: '1.5rem',
-            transition: 'all 0.3s ease-in-out',
-            animation: 'fadeIn 0.5s ease-out',
-            border: '2px solid rgba(156, 39, 176, 0.3)',
-            maxHeight: 'none',
-            height: 'auto'
+            animation: `slideIn 0.3s ease-out forwards ${0.1 + (floorIndex * 0.1)}s`,
+            opacity: 0,
+            transform: 'translateY(20px)'
           }}>
-          <h3 className="text-2xl font-bold mb-4 text-center" 
+          <h4 className="text-lg font-semibold mb-2 pl-2 border-l-4 border-purple-500"
             style={{
-              background: 'linear-gradient(90deg, #9c27b0, #673ab7)',
+              background: 'linear-gradient(90deg, #673ab7, #9c27b0)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+              textShadow: '0 1px 2px rgba(0,0,0,0.2)'
             }}>
-            {selectedDepartment.name} Venues
-          </h3>
-          <div className="text-center mb-3 text-purple-200 text-sm">
-            <p>Below are all available venues in {selectedDepartment.name}</p>
-          </div>
+            {floor}
+          </h4>
           
-          {/* Loop through each floor group with animations */}
-          {Object.keys(organizedVenues).sort((a, b) => {
-            // Sort floors in logical order: Ground Floor, First Floor, Second Floor, etc.
-            const floorOrder = {
-              'Ground Floor': 1,
-              'First Floor': 2,
-              'Second Floor': 3,
-              'Third Floor': 4
-            };
-            return floorOrder[a] - floorOrder[b];
-          }).map((floor, floorIndex) => (
-            <div key={floorIndex} className="mb-5 animate-slideIn" 
-              style={{
-                animation: `slideIn 0.3s ease-out forwards ${0.1 + (floorIndex * 0.1)}s`,
-                opacity: 0,
-                transform: 'translateY(20px)'
-              }}>
-              <h4 className="text-lg font-semibold mb-2 pl-2 border-l-4 border-purple-500"
-                style={{
-                  background: 'linear-gradient(90deg, #673ab7, #9c27b0)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  textShadow: '0 1px 2px rgba(0,0,0,0.2)'
-                }}>
-                {floor}
-              </h4>
-              
-              {/* Proper table layout that works well on both mobile and PC */}
-              <div className="rounded-lg shadow-lg">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="bg-purple-900/50 border-b border-purple-700">
-                      <th className="py-2 px-3 text-left text-sm font-semibold text-white">Venue Name</th>
-                      <th className="py-2 px-3 text-left text-sm font-semibold text-white">Type</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {organizedVenues[floor].map((venue, venueIndex) => (
-                      <tr 
-                        key={venueIndex}
-                        className="border-b border-purple-800/30 hover:bg-purple-800/40 transition-colors duration-150"
-                        style={{ 
-                          animation: `fadeIn 0.3s ease-out forwards ${0.2 + (venueIndex * 0.05)}s`,
-                          opacity: 0
-                        }}
-                      >
-                        <td className="py-2 px-3">
-                          <div className="flex items-center">
-                            <span className="inline-block w-3 h-3 rounded-full bg-purple-400 mr-2"></span>
-                            <span className="font-medium text-white">{venue.name}</span>
-                          </div>
-                        </td>
-                        <td className="py-2 px-3 text-purple-200 text-sm">
-                          {venue.name.toLowerCase().includes('lab') ? 'Laboratory' :
-                           venue.name.toLowerCase().includes('hall') ? 'Hall' :
-                           venue.name.toLowerCase().includes('classroom') ? 'Classroom' :
-                           'Classroom'}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          ))}
+          {/* Use StyledVenueTable component with the events for this floor */}
+          <StyledVenueTable venues={eventsByFloor[floor]} />
         </div>
-      )}
+      ));
+    })()}
+  </div>
+)}
     </div>
   );
 };
