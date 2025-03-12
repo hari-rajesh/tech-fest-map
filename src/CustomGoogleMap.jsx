@@ -139,11 +139,15 @@ export const CustomGoogleMap = () => {
               lng: position.coords.longitude
             };
             locationMarker.setPosition(pos);
-            map.setCenter(pos);
-            map.setZoom(18);
+            // Only set initial center and zoom once, then never auto-center again
+            if (!initialLocationSet) {
+              map.setCenter(pos);
+              map.setZoom(18);
+              setInitialLocationSet(true);
+            }
             setUserLocation(pos);
 
-            // Watch for location updates
+            // Watch for location updates without centering
             navigator.geolocation.watchPosition(
               (newPosition) => {
                 const newPos = {
@@ -576,7 +580,7 @@ export const CustomGoogleMap = () => {
             // Update user location state for path calculation
             setUserLocation(pos);
 
-            // Create or update current location marker
+            // Create or update current location marker without centering
             if (!currentLocationMarkerRef.current) {
               currentLocationMarkerRef.current = new window.google.maps.Marker({
                 position: pos,
@@ -596,13 +600,7 @@ export const CustomGoogleMap = () => {
               currentLocationMarkerRef.current.setPosition(pos);
             }
 
-            // Remove the auto-centering logic
-            // Only set center once when location is first obtained
-            if (!initialLocationSet) {
-              setInitialLocationSet(true);
-              mapInstanceRef.current.setCenter(pos);
-              mapInstanceRef.current.setZoom(15);
-            }
+            // Remove auto-centering completely
           },
           (error) => console.error('Error watching position:', error),
           {
