@@ -70,7 +70,7 @@
     name: 'Library',
     position: { lat: 9.148418781524288, lng: 77.83118898864282 },
     category: 'facility',
-    description: 'Central library with study areas'
+    description: 'Central Library – Study & Waiting area.'
   },
   {
 
@@ -128,12 +128,19 @@
     category: 'foodstall',
     description: 'Food Stall - Fresh, Fast, & Flavorful! 🍔🌮🥤'
   },
-  // {
-  //   name: 'Food Stall',
-  //   // Near IT and CSE Canteen
-  //   position: { lat: 9.14734363795256, lng:  77.83196597628134},
-  //   category: 'foodstall',
-  //   description: 'Food Stall - Fresh, Fast, & Flavorful! 🍔🌮🥤'
-  // }
+  {
+    name: 'Food Stall',
+    // Near IT and CSE Canteen
+    position: { lat: 9.14734363795256, lng:  77.83196597628134},
+    category: 'foodstall',
+    description: 'Food Stall - Fresh, Fast, & Flavorful! 🍔🌮🥤'
+  },
+  {
+    name: 'WIFI Zone',
+    // WIFI Zone
+    position: { lat: 9.147667614460369, lng:  77.83242867121479},
+    category: 'WIFI',
+    description: 'WIFI Zone - Stay connected! 📶'
+  }
 
 ];

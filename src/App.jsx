@@ -5,7 +5,7 @@ import './styles.css';
 function App() {
   return (
     <div className="app-container">
-      <CustomGoogleMap zoom={10}/>
+      <CustomGoogleMap />
     </div>
   );
 }

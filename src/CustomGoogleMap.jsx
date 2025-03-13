@@ -237,6 +237,12 @@ export const CustomGoogleMap = () => {
                 scaledSize: new window.google.maps.Size(40, 40),
                 labelOrigin: new window.google.maps.Point(15, -10)
               };
+            case "WIFI":
+              return {
+                url:'/WIFI.png',
+                scaledSize: new window.google.maps.Size(40, 40),
+                labelOrigin: new window.google.maps.Point(15, -10)
+              }
 
           default:
             return {
@@ -272,6 +278,9 @@ export const CustomGoogleMap = () => {
         }
         else if (category==="parking"){
           return 'Parking';
+        }
+        else if (category==="WIFI"){
+          return 'WIFI Zone';
         }
         else if (category === 'entrance') {
             return 'Entrance';
