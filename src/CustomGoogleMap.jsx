@@ -641,9 +641,16 @@ export const CustomGoogleMap = () => {
     // Simplified script loading and map initialization
     if (!window.google) {
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`;
+      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || process.env.VITE_GOOGLE_MAPS_API_KEY;
+      
+      if (!apiKey) {
+        console.error('Google Maps API key is missing');
+        return;
+      }
+      
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
       script.async = true;
-      script.onload = initMap;
+            script.onload = initMap;
       document.head.appendChild(script);
     } else {
       initMap();
