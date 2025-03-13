@@ -112,6 +112,13 @@ export const CustomGoogleMap = () => {
 
       mapInstanceRef.current = map;
 
+      // Add click listener to log coordinates
+      map.addListener('click', (e) => {
+        const lat = e.latLng.lat();
+        const lng = e.latLng.lng();
+        console.log(`Latitude: ${lat}, Longitude: ${lng}`);
+      });
+
       // Add initial current location marker
       if (navigator.geolocation) {
         const locationMarker = new window.google.maps.Marker({
@@ -139,15 +146,11 @@ export const CustomGoogleMap = () => {
               lng: position.coords.longitude
             };
             locationMarker.setPosition(pos);
-            // Only set initial center and zoom once, then never auto-center again
-            if (!initialLocationSet) {
-              map.setCenter(pos);
-              map.setZoom(18);
-              setInitialLocationSet(true);
-            }
+            map.setCenter(pos);
+            map.setZoom(18);
             setUserLocation(pos);
 
-            // Watch for location updates without centering
+            // Watch for location updates
             navigator.geolocation.watchPosition(
               (newPosition) => {
                 const newPos = {
@@ -222,6 +225,19 @@ export const CustomGoogleMap = () => {
               scaledSize: new window.google.maps.Size(40, 40),
               labelOrigin: new window.google.maps.Point(15, -10)
             };
+          case 'parking':
+            return {
+              url: `/parking2.png`,
+              scaledSize: new window.google.maps.Size(40, 40),
+              labelOrigin: new window.google.maps.Point(15, -10)
+            };
+            case 'foodstall':
+              return {
+                url: `/food1.png`,
+                scaledSize: new window.google.maps.Size(40, 40),
+                labelOrigin: new window.google.maps.Point(15, -10)
+              };
+
           default:
             return {
               url: `/restaurant.png`,
@@ -254,10 +270,17 @@ export const CustomGoogleMap = () => {
         } else if (category === 'facility') {
           return 'Library';
         }
+        else if (category==="parking"){
+          return 'Parking';
+        }
         else if (category === 'entrance') {
             return 'Entrance';
           
-        } else if (category === 'canteen') {
+        }
+        else if (category === 'foodstall') {
+          return 'Food Stall';
+        
+      } else if (category === 'canteen') {
           return 'Canteen';
         }
         return '';
@@ -288,60 +311,60 @@ export const CustomGoogleMap = () => {
         });
         const infowindow = new window.google.maps.InfoWindow({
           disableAutoPan: false,
-          maxWidth: 240, // Increased from 220 to 240
-          pixelOffset: new window.google.maps.Size(0, -25),
+          maxWidth: 220,
+          pixelOffset: new window.google.maps.Size(0, -25), // Significant upward adjustment
           content: `
             <div style="padding: 0; margin: 0; background-color: #21013c; color: white; border-radius: 4px; overflow: hidden; border: 2px solid #3a0066;">
               <div style="padding: 5px; margin: 0;">
-          <h3 style="font-weight: bold; margin: 0; color: white; font-size: 13px; line-height: 1.1;">${dept.name}</h3>
-          <p style="margin: 2px 0 4px 0; color: #e0e0e0; font-size: 10px; line-height: 1.1;">${dept.description}</p>
-          <div style="display: grid; grid-template-columns: ${dept.category === 'academic' ? '1fr 1fr' : '1fr'}; gap: 4px; margin: 0;">
-            <button 
-              onclick="window.showRoute(${dept.position.lat}, ${dept.position.lng})"
-              style="
-                background: #1a73e8;
-                color: white;
-                border: none;
-                padding: 4px 0;
-                border-radius: 8px;
-                cursor: pointer;
-                font-weight: bold;
-                font-size: 11px;
-                width: 100%;
-                line-height: 1;
-                height: 24px;
-                text-align: center;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              "
-            >
-             Show Path
-            </button>
-            ${dept.category === 'academic' ? `
-            <button 
-              onclick="window.showDetails('${dept.name}')"
-              style="
-                background: #1a73e8;
-                color: white;
-                border: none;
-                padding: 4px 0;
-                border-radius: 8px;
-                cursor: pointer;
-                font-weight: bold;
-                font-size: 11px;
-                width: 100%;
-                line-height: 1;
-                height: 24px;
-                text-align: center;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              "
-            >
-              Details
-            </button>` : ''}
-          </div>
+                <h3 style="font-weight: bold; margin: 0; color: white; font-size: 13px; line-height: 1.1;">${dept.name}</h3>
+                <p style="margin: 2px 0 4px 0; color: #e0e0e0; font-size: 10px; line-height: 1.1;">${dept.description}</p>
+                <div style="display: grid; grid-template-columns: ${dept.category === 'academic' ? '1fr 1fr' : '1fr'}; gap: 4px; margin: 0;">
+                  <button 
+                    onclick="window.showRoute(${dept.position.lat}, ${dept.position.lng})"
+                    style="
+                      background: #1a73e8;
+                      color: white;
+                      border: none;
+                      padding: 4px 0;
+                      border-radius: 8px;
+                      cursor: pointer;
+                      font-weight: bold;
+                      font-size: 11px;
+                      width: 100%;
+                      line-height: 1;
+                      height: 24px;
+                      text-align: center;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                   Show Path
+                  </button>
+                  ${dept.category === 'academic' ? `
+                  <button 
+                    onclick="window.showDetails('${dept.name}')"
+                    style="
+                      background: #1a73e8;
+                      color: white;
+                      border: none;
+                      padding: 4px 0;
+                      border-radius: 8px;
+                      cursor: pointer;
+                      font-weight: bold;
+                      font-size: 11px;
+                      width: 100%;
+                      line-height: 1;
+                      height: 24px;
+                      text-align: center;
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+                    "
+                  >
+                    Details
+                  </button>` : ''}
+                </div>
               </div>
             </div>
           `
@@ -385,7 +408,7 @@ export const CustomGoogleMap = () => {
             opacity: 1 !important;
           
           }
-       
+ 
           
           /* Remove any extra container padding */
           .gm-style-iw-a, .gm-style-iw-t {
@@ -580,7 +603,7 @@ export const CustomGoogleMap = () => {
             // Update user location state for path calculation
             setUserLocation(pos);
 
-            // Create or update current location marker without centering
+            // Create or update current location marker
             if (!currentLocationMarkerRef.current) {
               currentLocationMarkerRef.current = new window.google.maps.Marker({
                 position: pos,
@@ -600,7 +623,13 @@ export const CustomGoogleMap = () => {
               currentLocationMarkerRef.current.setPosition(pos);
             }
 
-            // Remove auto-centering completely
+            // Remove the auto-centering logic
+            // Only set center once when location is first obtained
+            if (!initialLocationSet) {
+              setInitialLocationSet(true);
+              mapInstanceRef.current.setCenter(pos);
+              mapInstanceRef.current.setZoom(15);
+            }
           },
           (error) => console.error('Error watching position:', error),
           {
