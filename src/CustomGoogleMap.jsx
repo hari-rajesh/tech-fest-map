@@ -265,31 +265,20 @@ export const CustomGoogleMap = () => {
           if (name.includes('Mechanical')) return 'MECH';
           if (name.includes('Civil')) return 'CIVIL';
         } else if (category === 'hostel') {
-
-          if (name.includes('BOYS HOSTEL 1')) return 'Boys Hostel 1';
-          if(name.includes('BOYS HOSTEL 2')) return 'Boys Hostel 2';
-
-          if (name.includes('Boys Hostel 1')) return 'Boys Hostel 1';
-          if(name.includes('Boys Hostel 2')) return 'Boys Hostel 2';
-
+          if (name.includes('BOYS HOSTEL 1') || name.includes('Boys Hostel 1')) return 'Boys Hostel 1';
+          if (name.includes('BOYS HOSTEL 2') || name.includes('Boys Hostel 2')) return 'Boys Hostel 2';
           if (name.includes('Girls')) return 'Girls Hostel';
         } else if (category === 'facility') {
           return 'Library';
-        }
-        else if (category==="parking"){
+        } else if (category === 'parking') {
           return 'Parking';
-        }
-        else if (category==="WIFI"){
+        } else if (category === 'WIFI') {
           return 'WIFI Zone';
-        }
-        else if (category === 'entrance') {
-            return 'Entrance';
-          
-        }
-        else if (category === 'foodstall') {
+        } else if (category === 'entrance') {
+          return 'Entrance';
+        } else if (category === 'foodstall') {
           return 'Food Stall';
-        
-      } else if (category === 'canteen') {
+        } else if (category === 'canteen') {
           return 'Canteen';
         }
         return '';
