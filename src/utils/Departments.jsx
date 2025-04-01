@@ -1,5 +1,5 @@
  // Add locations with categories and descriptions
- export default Departments = [
+ const Departments = [
     {
       name: 'CSE Block',
       position: { lat: 9.146681197724407, lng: 77.8323113316056 },
@@ -91,3 +91,5 @@
       description: 'S&H Block'
     }
   ];
+
+  export default Departments;

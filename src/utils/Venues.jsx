@@ -1,4 +1,4 @@
-export default venues = [
+const venues = [
     // CSE Venues
     { name: 'Seminar Hall', floor: 'Second Floor', department: 'CSE Block' },
     { name: 'Activity Halls', floor: 'Second Floor', department: 'CSE Block' },
@@ -76,6 +76,6 @@ export default venues = [
     { name: 'Smart Classroom', floor: 'Ground Floor', department: 'S&H Block' },
     { name: 'LH3', floor: 'Ground Floor', department: 'S&H Block' },
     { name: 'LH2', floor: 'Ground Floor', department: 'S&H Block' },
+];
 
-
-  ];
+export default venues;
