@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {venues} from './utils/Venues.jsx'
-import {Departments} from './utils/Departments.jsx'
+import venues from './utils/Venues.jsx'
+import Departments from './utils/Departments.jsx'
 import StyledVenueTable from './StyledVenueTable.jsx';
 export const CustomGoogleMap = () => {
   const mapRef = useRef(null);
